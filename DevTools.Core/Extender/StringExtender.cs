@@ -1,0 +1,23 @@
+﻿using System.Text;
+
+namespace DevTools.Core.Extender
+{
+	public static class StringExtender
+	{
+		public static string ToStringValue(this object rawValue)
+		{
+			if (rawValue == null)
+				return string.Empty;
+			else if (rawValue is string)
+				return (string)rawValue;
+			else
+				return rawValue.ToString();
+		}
+
+		public static bool IsNotNullOrEmpty(this string value)
+				=> !string.IsNullOrEmpty(value);
+
+		public static byte[] ToByteArray(this string value)
+				=> Encoding.UTF8.GetBytes(value);
+	}
+}

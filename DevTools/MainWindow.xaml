@@ -1,0 +1,69 @@
+﻿<mah:MetroWindow x:Class="DevTools.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:DevTools" xmlns:views="clr-namespace:DevTools.Views"
+                 mc:Ignorable="d"
+                 Title="Devtools" Height="450" Width="800">
+    
+    <mah:MetroWindow.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+        <Style x:Key="tbHeaderStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </mah:MetroWindow.Resources>
+        
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="HeaderRow"
+              Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Dev Tools"
+                       Grid.Column="0"
+                       Style="{StaticResource tbHeaderStyle}"/>
+
+            <mah:ToggleSwitch Grid.Column="2"
+                              Content="Darkmode"
+                              Command="{Binding [SwitchTheme]}"/>
+        </Grid>
+
+        <TabControl Grid.Row="1"
+                    TabStripPlacement="Left">
+            <TabItem Header="Preview">
+                <views:DevPreviewTabView/>
+            </TabItem>
+            
+            <TabItem Header="Converter">
+                <views:DevConverterTabView/>
+            </TabItem>
+
+            <TabItem Header="Generator">
+                <views:DevGeneratorTabView/>
+            </TabItem>
+
+        </TabControl>
+
+        <Grid x:Name="BottomRow"
+              Grid.Row="2">
+
+            <TextBlock Text="Footer ....."/>
+        </Grid>
+
+
+    </Grid>
+</mah:MetroWindow>
