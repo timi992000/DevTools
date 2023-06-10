@@ -11,6 +11,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -22,7 +24,7 @@
             <Button Content="Clear"
                     Command="{Binding [Clear]}"
                     Grid.Column="0"/>
-            <Button Content="Open rtf document"
+            <Button Content="Open rtf document external"
                                 Command="{Binding [Open]}"
                                 Grid.Column="1"
                     Margin="10 0 0 0"/>
@@ -35,6 +37,13 @@
                  AcceptsReturn="True"
                  Margin="0 10 0 0"
                  VerticalScrollBarVisibility="Auto"
-                 mah:TextBoxHelper.Watermark="Paste rtf"/>
+                 mah:TextBoxHelper.Watermark="Paste rtf"
+                 TextChanged="__TextChanged"/>
+
+        <GridSplitter Grid.Row="2" Height="5" Background="Gray"/>
+
+        <RichTextBox x:Name="RtfTextBox"
+                     Grid.Row="3"/>
+
     </Grid>
 </UserControl>

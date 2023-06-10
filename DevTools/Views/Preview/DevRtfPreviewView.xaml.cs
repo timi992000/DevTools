@@ -1,4 +1,5 @@
-﻿using DevTools.ViewModels.Preview;
+﻿using DevTools.Core.Extender;
+using DevTools.ViewModels.Preview;
 using System.Windows.Controls;
 
 namespace DevTools.Views.Preview
@@ -12,7 +13,16 @@ namespace DevTools.Views.Preview
 		{
 			InitializeComponent();
 			DataContext = new DevRtfPreviewViewModel();
+			_ViewModel.RtfTextBox = RtfTextBox;
+		}
 
+		public DevRtfPreviewViewModel _ViewModel => DataContext is DevRtfPreviewViewModel ?
+			DataContext as DevRtfPreviewViewModel : new DevRtfPreviewViewModel();
+
+		private void __TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (e.Source is TextBox tb)
+				_ViewModel.TextChanged(tb.Text.ToStringValue());
 		}
 	}
 }

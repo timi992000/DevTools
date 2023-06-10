@@ -1,11 +1,9 @@
-﻿using DevTools.Core.BaseClasses;
-using System.Diagnostics;
-using System.Windows;
+﻿using DevTools.Core.Extender;
 using System;
 using System.IO;
-using MahApps.Metro.Controls.Dialogs;
-using DevTools.Core.Extender;
-using System.ComponentModel;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace DevTools.ViewModels.Preview
 {
@@ -16,5 +14,26 @@ namespace DevTools.ViewModels.Preview
 		{
 		}
 
+		public RichTextBox RtfTextBox
+		{
+			get => Get<RichTextBox>();
+			set => Set(value);
+		}
+
+		public void TextChanged(string rtfContent)
+		{
+			if (RtfTextBox == null)
+			{
+				Execute_Open();
+				return;
+			}
+			var documentBytes = Encoding.UTF8.GetBytes(rtfContent.GetRtfUnicodeEscapedString());
+			using (var reader = new MemoryStream(documentBytes))
+			{
+				reader.Position = 0;
+				RtfTextBox.SelectAll();
+				RtfTextBox.Selection.Load(reader, DataFormats.Rtf);
+			}
+		}
 	}
 }

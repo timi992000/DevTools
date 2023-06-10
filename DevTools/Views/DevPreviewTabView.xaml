@@ -12,10 +12,10 @@
         </Grid.RowDefinitions>
 
         <TabControl>
-            <TabItem Header="Open rtf">
+            <TabItem Header="Preview rtf">
                 <preview:DevRtfPreviewView/>
             </TabItem>
-            <TabItem Header="Open html">
+            <TabItem Header="Preview html">
                 <preview:DevHtmlPreview/>
             </TabItem>
         </TabControl>
