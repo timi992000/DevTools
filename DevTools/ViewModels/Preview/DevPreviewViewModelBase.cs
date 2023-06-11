@@ -16,6 +16,8 @@ namespace DevTools.ViewModels.Preview
 		private string _StartCharacters;
 		private bool _SkipStartChecking;
 
+		public DevPreviewViewModelBase()
+		{ }
 		public DevPreviewViewModelBase(string extension, string startCharacters) : this(extension, startCharacters, false)
 		{ }
 		public DevPreviewViewModelBase(string extension, string startCharacters, bool skipStartChecking)

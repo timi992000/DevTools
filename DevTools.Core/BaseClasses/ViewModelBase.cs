@@ -1,4 +1,5 @@
-﻿using DevTools.Core.Commands;
+﻿using DevTools.Core.Attributes;
+using DevTools.Core.Commands;
 using DevTools.Core.Extender;
 using DevTools.Core.OperationResult;
 using MahApps.Metro.Controls;
@@ -25,11 +26,13 @@ namespace DevTools.Core.BaseClasses
 		private readonly ConcurrentDictionary<string, object> _values;
 
 		private readonly List<string> _commandNames;
-		private IDictionary<String, MethodInfo> _MyMethods;
+		private IDictionary<string, MethodInfo> _Methods;
+		private IDictionary<string, DependsUponObject> _DependsUponDict;
 
 		public ViewModelBase()
 		{
 			_properties = new ConcurrentDictionary<string, object>();
+			_DependsUponDict = new ConcurrentDictionary<string, DependsUponObject>();
 			_commandNames = new List<string>();
 
 			Type MyType = GetType();
@@ -116,6 +119,7 @@ namespace DevTools.Core.BaseClasses
 			_properties[name] = value;
 			this[name] = value;
 			OnPropertyChanged(name);
+			__RefreshDependendObjects(name);
 		}
 		#endregion
 
@@ -173,20 +177,36 @@ namespace DevTools.Core.BaseClasses
 			{
 				if (method.Name.StartsWith(EXECUTE_PREFIX))
 					_commandNames.Add(method.Name.Substring(EXECUTE_PREFIX.Length));
+				__ProcessMethodAttributes(method);
 				MethodInfos[method.Name] = method;
 			}
 			foreach (var property in myType.GetProperties())
 			{
 				this[property.Name] = property;
+				__ProcessPropertyAttributes(property);
 			}
 			_commandNames.ForEach(n => Set(n, new RelayCommand(p => __ExecuteCommand(n, p), p => __CanExecuteCommand(n, p))));
-			_MyMethods = MethodInfos;
+			_Methods = MethodInfos;
+		}
+
+		private void __ProcessPropertyAttributes(PropertyInfo property)
+		{
+			var attributes = property.GetCustomAttributes<DevDependsUpon>();
+			if (attributes.Any())
+				_DependsUponDict[property.Name] = new DependsUponObject { DependendObjects = attributes.Where(a => a.MemberName.IsNotNullOrEmpty()).Select(m => m.MemberName).ToList() };
+		}
+
+		private void __ProcessMethodAttributes(MethodInfo method)
+		{
+			var attributes = method.GetCustomAttributes<DevDependsUpon>();
+			if (attributes.Any())
+				_DependsUponDict[method.Name] = new DependsUponObject { DependendObjects = attributes.Where(a => a.MemberName.IsNotNullOrEmpty()).Select(m => m.MemberName).ToList() };
 		}
 
 		private void __ExecuteCommand(string name, object parameter)
 		{
 			MethodInfo methodInfo;
-			_MyMethods.TryGetValue(EXECUTE_PREFIX + name, out methodInfo);
+			_Methods.TryGetValue(EXECUTE_PREFIX + name, out methodInfo);
 			if (methodInfo == null) return;
 
 			methodInfo.Invoke(this, methodInfo.GetParameters().Length == 1 ? new[] { parameter } : null);
@@ -194,14 +214,52 @@ namespace DevTools.Core.BaseClasses
 
 		private bool __CanExecuteCommand(string name, object parameter)
 		{
-
 			MethodInfo methodInfo;
-			_MyMethods.TryGetValue(CANEXECUTE_PREFIX + name, out methodInfo);
+			_Methods.TryGetValue(CANEXECUTE_PREFIX + name, out methodInfo);
 			if (methodInfo == null) return true;
 
 			return (bool)methodInfo.Invoke(this, methodInfo.GetParameters().Length == 1 ? new[] { parameter } : null);
 		}
 
+		private void __RefreshDependendObjects(string memberName)
+		{
+			if (_DependsUponDict != null)
+			{
+				var dependendObjects = _DependsUponDict.Where(d => d.Value != null && d.Value.DependendObjects != null && d.Value.DependendObjects.Contains(memberName));
+				if (dependendObjects != null)
+				{
+					foreach (var dependsUponObj in dependendObjects)
+					{
+						if (dependsUponObj.Value.DependendObjects != null && dependsUponObj.Value.DependendObjects.Any())
+						{
+							if (_properties.ContainsKey(dependsUponObj.Key))
+								OnPropertyChanged(dependsUponObj.Key);
+							else if (_Methods.ContainsKey(dependsUponObj.Key))
+							{
+								MethodInfo methodInfo;
+								_Methods.TryGetValue(dependsUponObj.Key, out methodInfo);
+								if (methodInfo == null) return;
+								if (methodInfo.GetParameters().Length == 0)
+									methodInfo.Invoke(this, null);
+							}
+						}
+					}
+				}
+			}
+		}
 
 	}
+
+	public class DependsUponObject
+	{
+		public DependsUponObject()
+		{
+			DependendObjects = new List<string>();
+		}
+		public List<string> DependendObjects { get; set; }
+		//public List<MethodInfo> Methods { get; private set; }
+		//public List<MethodInfo> Properties { get; private set; }
+
+	}
+
 }

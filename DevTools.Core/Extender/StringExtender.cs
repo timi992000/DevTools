@@ -17,6 +17,8 @@ namespace DevTools.Core.Extender
 
 		public static bool IsNotNullOrEmpty(this string value)
 				=> !string.IsNullOrEmpty(value);
+		public static bool IsNullOrEmpty(this string value)
+				=> string.IsNullOrEmpty(value);
 
 		public static byte[] ToByteArray(this string value)
 				=> Encoding.UTF8.GetBytes(value);
