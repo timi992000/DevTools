@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.WebView2.Wpf;
+﻿using DevTools.Core.Attributes;
+using Microsoft.Web.WebView2.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,8 @@ namespace DevTools.ViewModels.Preview
 			set => Set(value);
 		}
 
-		public async void NavigateToString(string htmlContent)
+		[DevDependsUpon(nameof(Text))]
+		public async void NavigateToString()
 		{
 			if (BrowserControl == null)
 			{
@@ -28,7 +30,7 @@ namespace DevTools.ViewModels.Preview
 				return;
 			}
 			await BrowserControl.EnsureCoreWebView2Async();
-			BrowserControl.NavigateToString(htmlContent);
+			BrowserControl.NavigateToString(Text);
 		}
 
 	}

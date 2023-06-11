@@ -22,7 +22,7 @@ namespace DevTools.Views.Preview
 		private void __TextChanged(object sender, TextChangedEventArgs e)
 		{
 			if (e.Source is TextBox tb)
-				_ViewModel.TextChanged(tb.Text.ToStringValue());
+				_ViewModel.Text = tb.Text.ToStringValue();
 		}
 	}
 }

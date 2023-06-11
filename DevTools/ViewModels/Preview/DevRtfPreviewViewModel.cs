@@ -1,4 +1,5 @@
-﻿using DevTools.Core.Extender;
+﻿using DevTools.Core.Attributes;
+using DevTools.Core.Extender;
 using System;
 using System.IO;
 using System.Text;
@@ -20,19 +21,32 @@ namespace DevTools.ViewModels.Preview
 			set => Set(value);
 		}
 
-		public void TextChanged(string rtfContent)
+		[DevDependsUpon(nameof(Text))]
+		public void TextChanged()
 		{
 			if (RtfTextBox == null)
 			{
 				Execute_Open();
 				return;
 			}
-			var documentBytes = Encoding.UTF8.GetBytes(rtfContent.GetRtfUnicodeEscapedString());
-			using (var reader = new MemoryStream(documentBytes))
+			try
 			{
-				reader.Position = 0;
-				RtfTextBox.SelectAll();
-				RtfTextBox.Selection.Load(reader, DataFormats.Rtf);
+				if (Text.IsNullOrEmpty())
+				{
+					RtfTextBox.SelectAll();
+					RtfTextBox.Document.Blocks.Clear();
+					return;
+				}
+				var documentBytes = Encoding.UTF8.GetBytes(Text);
+				using (var reader = new MemoryStream(documentBytes))
+				{
+					reader.Position = 0;
+					RtfTextBox.SelectAll();
+					RtfTextBox.Selection.Load(reader, DataFormats.Rtf);
+				}
+			}
+			catch (Exception)
+			{
 			}
 		}
 	}
