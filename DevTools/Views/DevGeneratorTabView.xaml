@@ -18,6 +18,7 @@
             <TabItem Header="QR Code Generator">
             </TabItem>
             <TabItem Header="Lorem ipsum Generator">
+                <generator:DevLoremIpsumGeneratorView/>
             </TabItem>
         </TabControl>
     </Grid>

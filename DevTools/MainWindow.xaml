@@ -17,6 +17,8 @@
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
+
+
     </mah:MetroWindow.Resources>
         
     <Grid Margin="10">

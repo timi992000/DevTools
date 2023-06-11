@@ -30,7 +30,6 @@ namespace DevTools.ViewModels
 			var currentTheme = ThemeManager.Current.DetectTheme();
 			var inverseTheme = ThemeManager.Current.GetInverseTheme(currentTheme);
 			ThemeManager.Current.ChangeTheme(Application.Current, inverseTheme);
-			DarkModeToggled = !DarkModeToggled;
 		}
 		private void __DetectWinThemeAndSetStart()
 		{
@@ -41,7 +40,7 @@ namespace DevTools.ViewModels
 				if (!useLightTheme)
 					Execute_SwitchTheme();
 
-				DarkModeToggled = !useLightTheme;
+				DarkModeToggled = !useLightTheme; 
 			}
 
 			//for (int i = 0; i < 10; i++)
