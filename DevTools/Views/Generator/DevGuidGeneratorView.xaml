@@ -98,12 +98,14 @@
                 <CheckBox Content="RFC 7515"
                           IsChecked="{Binding RFC7515,Mode=TwoWay}"
                           Grid.Column="2"
-                          Margin="10 10 0 0"/>
+                          Margin="10 10 0 0"
+                          IsEnabled="False"/>
 
                 <CheckBox Content="URL Encode"
                           IsChecked="{Binding URLEncode,Mode=TwoWay}"
                           Grid.Column="3"
-                          Margin="10 10 0 0"/>
+                          Margin="10 10 0 0"
+                          IsEnabled="False"/>
 
             </Grid>
 

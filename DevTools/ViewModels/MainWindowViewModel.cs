@@ -19,11 +19,18 @@ namespace DevTools.ViewModels
 
 		public static MetroWindow MainWindow { get; set; }
 
+		public bool DarkModeToggled
+		{
+			get => Get<bool>();
+			set => Set(value);
+		}
+
 		public void Execute_SwitchTheme()
 		{
 			var currentTheme = ThemeManager.Current.DetectTheme();
 			var inverseTheme = ThemeManager.Current.GetInverseTheme(currentTheme);
 			ThemeManager.Current.ChangeTheme(Application.Current, inverseTheme);
+			DarkModeToggled = !DarkModeToggled;
 		}
 		private void __DetectWinThemeAndSetStart()
 		{
@@ -33,11 +40,13 @@ namespace DevTools.ViewModels
 				var useLightTheme = registryThemeKey.GetValue("SystemUsesLightTheme").ToStringValue() == "1";
 				if (!useLightTheme)
 					Execute_SwitchTheme();
+
+				DarkModeToggled = !useLightTheme;
 			}
 
 			//for (int i = 0; i < 10; i++)
 			//{
-					//Inverse the windows theme every x Seconds
+			//Inverse the windows theme every x Seconds
 			//	registryThemeKey.SetValue("SystemUsesLightTheme",i % 2 == 0 ? "1" : "0", RegistryValueKind.DWord);
 
 			//	Thread.Sleep(1000);

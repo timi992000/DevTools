@@ -40,7 +40,8 @@
 
             <mah:ToggleSwitch Grid.Column="2"
                               Content="Darkmode"
-                              Command="{Binding [SwitchTheme]}"/>
+                              Command="{Binding [SwitchTheme]}"
+                              IsOn="{Binding DarkModeToggled, Mode=TwoWay}"/>
         </Grid>
 
         <TabControl Grid.Row="1"
