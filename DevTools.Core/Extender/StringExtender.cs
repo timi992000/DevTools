@@ -23,6 +23,16 @@ namespace DevTools.Core.Extender
 		public static byte[] ToByteArray(this string value)
 				=> Encoding.UTF8.GetBytes(value);
 
+    public static bool IsEquals (this string value, string valueToCompare)
+    {
+      if(value == null &&  valueToCompare == null)
+        return true;
+      if ((value == null && valueToCompare != null) || value != null && valueToCompare == null)
+        return false;
+
+      return value.Equals(valueToCompare, StringComparison.InvariantCultureIgnoreCase);
+    }
+
 		public static string GetRtfUnicodeEscapedString(this string value)
 		{
 			var sb = new StringBuilder();
