@@ -37,6 +37,10 @@ namespace DevTools.Core.BaseClasses
 
 			Type MyType = GetType();
 			_values = new ConcurrentDictionary<string, object>();
+			if (GetType().Name == "DevRegexToCheckItemViewModel")
+			{
+
+			}
 			__GetMembersAndGenerateCommands(MyType);
 		}
 
@@ -242,6 +246,8 @@ namespace DevTools.Core.BaseClasses
 								if (methodInfo.GetParameters().Length == 0)
 									methodInfo.Invoke(this, null);
 							}
+							else
+								OnPropertyChanged(dependsUponObj.Key);
 						}
 					}
 				}

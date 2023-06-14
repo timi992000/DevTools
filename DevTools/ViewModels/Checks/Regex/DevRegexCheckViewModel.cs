@@ -4,48 +4,91 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace DevTools.ViewModels.Checks.Regex
 {
-  public class DevRegexCheckViewModel : ViewModelBase
-  {
-    public DevRegexCheckViewModel()
-    {
-      __Init();
-    }
+	public class DevRegexCheckViewModel : ViewModelBase
+	{
+		public event EventHandler RegexExpressionChanged;
+		public DevRegexCheckViewModel()
+		{
+			__Init();
+		}
 
-    public ObservableCollection<DevRegexToCheckItemViewModel> ItemsToCheck
-    {
-      get => Get<ObservableCollection<DevRegexToCheckItemViewModel>>();
-      set => Set(value);
-    }
+		public string RegexExpression
+		{
+			get => Get<string>();
+			set
+			{
+				Set(value);
+				RegexExpressionChanged?.Invoke(this, EventArgs.Empty);
+			}
+		}
 
-    public void Execute_ImportClipBoardItem()
-    {
-      if (Clipboard.ContainsText())
-      {
-        ItemsToCheck = new ObservableCollection<DevRegexToCheckItemViewModel>(Clipboard.GetText().Split("\r")
-          .Select(u => u.Trim()).Where(s => s.IsNotNullOrEmpty() && !s.IsEquals("\n"))
-          .Distinct().Select(n => __NewVM(n)));
-      }
-    }
+		public ObservableCollection<DevRegexToCheckItemViewModel> ItemsToCheck
+		{
+			get => Get<ObservableCollection<DevRegexToCheckItemViewModel>>();
+			set => Set(value);
+		}
 
-    private DevRegexToCheckItemViewModel __NewVM(string stringToCheck)
-    {
-      var vm = new DevRegexToCheckItemViewModel();
-      vm.TextToCheck = stringToCheck;
-      return vm;
-    }
+		public void Execute_ImportClipBoardItem()
+		{
+			if (Clipboard.ContainsText())
+			{
+				__SetItemsToCheckFromString(Clipboard.GetText());
 
-    private void __Init()
-    {
-      ItemsToCheck = new ObservableCollection<DevRegexToCheckItemViewModel>
-      {
-        new DevRegexToCheckItemViewModel { TextToCheck = "POPO" }
-      };
-    }
-  }
+			}
+		}
+
+		private void __SetItemsToCheckFromString(string multiLineBaseString)
+		{
+			IEnumerable<DevRegexToCheckItemViewModel> collection = null;
+			if (multiLineBaseString.IsNotNullOrEmpty())
+			{
+				collection = multiLineBaseString.Split("\r")
+					.Select(u => u.Trim()).Where(s => s.IsNotNullOrEmpty() && !s.IsEquals("\n"))
+					.Distinct().Select(n => __NewVM(n));
+			}
+			ItemsToCheck = new ObservableCollection<DevRegexToCheckItemViewModel>(collection);
+			RegexExpressionChanged?.Invoke(this, EventArgs.Empty);
+		}
+
+		public void Execute_SetExample()
+		{
+			try
+			{
+				__SetItemsToCheckFromString(@"(123) 456-7890
+(123)456-7890
+123-456-7890
+123.456.7890
+1234567890
++31636363634
++91 (123) 456-7890
+-91 (123)456-7890
++91 123-456-7890
++91 123.456.7890
++91 123456_7890
++91 123 456 7890");
+				RegexExpression = @"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$";
+			}
+			catch (Exception)
+			{
+
+			}
+		}
+
+
+		private DevRegexToCheckItemViewModel __NewVM(string stringToCheck)
+		{
+			var vm = new DevRegexToCheckItemViewModel(this);
+			vm.TextToCheck = stringToCheck;
+			return vm;
+		}
+
+		private void __Init()
+		{
+			ItemsToCheck = new ObservableCollection<DevRegexToCheckItemViewModel>();
+		}
+	}
 }
