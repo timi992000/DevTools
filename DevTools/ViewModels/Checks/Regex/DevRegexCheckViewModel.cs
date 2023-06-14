@@ -78,17 +78,48 @@ namespace DevTools.ViewModels.Checks.Regex
 			}
 		}
 
+		public void RemoveItem(DevRegexToCheckItemViewModel item)
+		{
+			ItemsToCheck.Remove(item);
+			__AddEmptyItemIfNeeded();
+		}
 
 		private DevRegexToCheckItemViewModel __NewVM(string stringToCheck)
 		{
 			var vm = new DevRegexToCheckItemViewModel(this);
 			vm.TextToCheck = stringToCheck;
+			vm.PropertyChanged += (sender, e) =>
+			{
+				__AddEmptyItemIfNeeded();
+			};
 			return vm;
 		}
 
 		private void __Init()
 		{
 			ItemsToCheck = new ObservableCollection<DevRegexToCheckItemViewModel>();
+			__AddEmptyItemIfNeeded();
+			ItemsToCheck.CollectionChanged += (sender, e) =>
+			{
+				__AddEmptyItemIfNeeded();
+			};
 		}
+
+
+		private void __AddEmptyItemIfNeeded()
+		{
+			try
+			{
+				if (ItemsToCheck.Count == 0 || ItemsToCheck.All(i => i.TextToCheck.IsNotNullOrEmpty()))
+				{
+					ItemsToCheck.Add(__NewVM(""));
+					RegexExpressionChanged?.Invoke(this, EventArgs.Empty);
+				}
+			}
+			catch (Exception)
+			{
+			}
+		}
+
 	}
 }

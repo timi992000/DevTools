@@ -30,7 +30,7 @@ namespace DevTools.ViewModels.Checks.Regex
 
 		public void Execute_Remove()
 		{
-
+			_ParentVM.RemoveItem(this);
 		}
 
 		private void __Init()
