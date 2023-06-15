@@ -13,7 +13,7 @@ namespace DevTools.ViewModels.Converter.FileToBase64
 {
 	public class DevConvertedBase64ItemViewModel : ViewModelBase
 	{
-		private DevFileToBase64ConverterViewModel _ParentVM;
+		private readonly DevFileToBase64ConverterViewModel _ParentVM;
 		public DevConvertedBase64ItemViewModel(string fileLocation, DevFileToBase64ConverterViewModel devFileToBase64ConverterViewModel)
 		{
 			FileLocation = fileLocation;
@@ -58,6 +58,7 @@ namespace DevTools.ViewModels.Converter.FileToBase64
 				}
 				catch (Exception ex)
 				{
+					ShowErrorMessage(ex);
 				}
 			});
 		}
