@@ -68,11 +68,11 @@ namespace DevTools.ViewModels.Generator
 			{
 				__GenerateGuid();
 			}
-			catch (Exception)
-			{
-
-			}
-		}
+      catch (Exception ex)
+      {
+        ShowErrorMessage(ex);
+      }
+    }
 
 		public void Execute_Copy()
 		{
@@ -81,11 +81,11 @@ namespace DevTools.ViewModels.Generator
 				if (GeneratedGuidText.IsNotNullOrEmpty())
 					Clipboard.SetText(GeneratedGuidText);
 			}
-			catch (Exception)
-			{
-
-			}
-		}
+      catch (Exception ex)
+      {
+        ShowErrorMessage(ex);
+      }
+    }
 
 		private void __GenerateGuid()
 		{

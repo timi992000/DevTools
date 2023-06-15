@@ -37,10 +37,6 @@ namespace DevTools.Core.BaseClasses
 
 			Type MyType = GetType();
 			_values = new ConcurrentDictionary<string, object>();
-			if (GetType().Name == "DevRegexToCheckItemViewModel")
-			{
-
-			}
 			__GetMembersAndGenerateCommands(MyType);
 		}
 
@@ -177,7 +173,7 @@ namespace DevTools.Core.BaseClasses
 		private void __GetMembersAndGenerateCommands(Type myType)
 		{
 			var MethodInfos = new Dictionary<String, MethodInfo>(StringComparer.InvariantCultureIgnoreCase);
-			foreach (var method in myType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+			foreach (var method in myType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
 			{
 				if (method.Name.StartsWith(EXECUTE_PREFIX))
 					_commandNames.Add(method.Name.Substring(EXECUTE_PREFIX.Length));

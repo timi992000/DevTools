@@ -43,12 +43,11 @@ namespace DevTools.ViewModels.Generator
 			{
 				__LoremIpsum(Words, Sentences, Paragraphs);
 			}
-			catch (Exception ex)
-			{
-
-				throw;
-			}
-		}
+      catch (Exception ex)
+      {
+        ShowErrorMessage(ex);
+      }
+    }
 
 		private void __LoremIpsum(int words,
 		int sentences, int paragraphs)

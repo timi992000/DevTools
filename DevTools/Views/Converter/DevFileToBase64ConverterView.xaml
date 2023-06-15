@@ -12,12 +12,15 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <Button Content="Select File/s"
-                Grid.Row="0"
-                Command="{Binding [SelectFiles]}" />
-
-        <ScrollViewer  Grid.Row="1"
+    <StackPanel Orientation="Horizontal"
+                Grid.Row="0">
+      <Button Content="Select File/s"
+              Command="{Binding [SelectFiles]}" />
+      <Button Content="Clear"
+              Margin="10 0 0 0"
+              Command="{Binding [Clear]}" />
+    </StackPanel>
+    <ScrollViewer  Grid.Row="1"
                        Margin="0 10 0 0">
             <ItemsControl ItemsSource="{Binding ItemsToConvert, Mode=TwoWay}">
                 <ItemsControl.ItemTemplate>

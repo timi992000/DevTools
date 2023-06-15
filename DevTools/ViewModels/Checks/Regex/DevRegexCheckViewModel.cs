@@ -72,11 +72,11 @@ namespace DevTools.ViewModels.Checks.Regex
 +91 123 456 7890");
 				RegexExpression = @"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$";
 			}
-			catch (Exception)
-			{
-
-			}
-		}
+      catch (Exception ex)
+      {
+        ShowErrorMessage(ex);
+      }
+    }
 
 		public void RemoveItem(DevRegexToCheckItemViewModel item)
 		{
@@ -116,10 +116,11 @@ namespace DevTools.ViewModels.Checks.Regex
 					RegexExpressionChanged?.Invoke(this, EventArgs.Empty);
 				}
 			}
-			catch (Exception)
-			{
-			}
-		}
+      catch (Exception ex)
+      {
+        ShowErrorMessage(ex);
+      }
+    }
 
 	}
 }
