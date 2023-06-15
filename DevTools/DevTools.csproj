@@ -11,14 +11,11 @@
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1823.32" />
+    <PackageReference Include="QRCoder" Version="1.4.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DevTools.Core\DevTools.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Converter\" />
   </ItemGroup>
 
 </Project>

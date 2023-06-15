@@ -16,6 +16,7 @@
                 <generator:DevGuidGeneratorView/>
             </TabItem>
             <TabItem Header="QR Code Generator">
+                <generator:DevQRCodeGeneratorView />
             </TabItem>
             <TabItem Header="Lorem ipsum Generator">
                 <generator:DevLoremIpsumGeneratorView/>

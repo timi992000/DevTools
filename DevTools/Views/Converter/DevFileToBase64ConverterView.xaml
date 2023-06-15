@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="DevTools.Views.Converter.DevFileToBase64ConverterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:DevTools.Views.Converter"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Button Content="Select File/s"
+                Grid.Row="0"
+                Command="{Binding [SelectFiles]}" />
+
+        <ScrollViewer  Grid.Row="1"
+                       Margin="0 10 0 0">
+            <ItemsControl ItemsSource="{Binding ItemsToConvert, Mode=TwoWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0 10 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                    Command="{Binding [Remove]}"
+                                    Height="Auto">
+                                <Viewbox Width="16"
+                                         Height="16">
+                                    <Path Data="M966.4 761.6l-140.8 140.8-313.6-320-313.6 320-140.8-140.8 320-313.6-320-313.6 140.8-140.8 313.6 320 313.6-320 140.8 140.8-320 313.6z"
+                                          Fill="Red" />
+                                </Viewbox>
+                            </Button>
+
+                            <TextBlock Text="{Binding FileLocation, Mode=TwoWay}"
+                                       Grid.Column="1"
+                                       Margin="10 0 0 0"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBlock Text="{Binding Converted, Mode=TwoWay}"
+                                       Grid.Column="2"
+                                       Margin="10 0 0 0"
+                                       VerticalAlignment="Center"
+                                       TextTrimming="CharacterEllipsis"/>
+
+                            <Button Content="Copy"
+                                    Grid.Column="3"
+                                    Command="{Binding [Copy]}"
+                                    Margin="10 0 0 0"/>
+
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

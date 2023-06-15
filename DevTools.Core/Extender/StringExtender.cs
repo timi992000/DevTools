@@ -23,7 +23,10 @@ namespace DevTools.Core.Extender
 		public static byte[] ToByteArray(this string value)
 				=> Encoding.UTF8.GetBytes(value);
 
-    public static bool IsEquals (this string value, string valueToCompare)
+		public static string ToUTF8String(this string value)
+				=> Encoding.Unicode.GetString(Encoding.UTF8.GetBytes(value));
+
+		public static bool IsEquals (this string value, string valueToCompare)
     {
       if(value == null &&  valueToCompare == null)
         return true;

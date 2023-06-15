@@ -177,7 +177,7 @@ namespace DevTools.Core.BaseClasses
 		private void __GetMembersAndGenerateCommands(Type myType)
 		{
 			var MethodInfos = new Dictionary<String, MethodInfo>(StringComparer.InvariantCultureIgnoreCase);
-			foreach (var method in myType.GetMethods())
+			foreach (var method in myType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
 			{
 				if (method.Name.StartsWith(EXECUTE_PREFIX))
 					_commandNames.Add(method.Name.Substring(EXECUTE_PREFIX.Length));
@@ -244,7 +244,17 @@ namespace DevTools.Core.BaseClasses
 								_Methods.TryGetValue(dependsUponObj.Key, out methodInfo);
 								if (methodInfo == null) return;
 								if (methodInfo.GetParameters().Length == 0)
-									methodInfo.Invoke(this, null);
+								{
+									try
+									{
+										methodInfo.Invoke(this, null);
+									}
+									catch (Exception ex)
+									{
+										ShowErrorMessage(ex);
+									}
+								}
+									
 							}
 							else
 								OnPropertyChanged(dependsUponObj.Key);
