@@ -15,6 +15,7 @@ namespace DevTools.ViewModels.Generator
     public DevQRCodeGeneratorViewModel()
     {
       ScalingFactor = 1;
+			TextForGeneration = "";
     }
 
     public string TextForGeneration
