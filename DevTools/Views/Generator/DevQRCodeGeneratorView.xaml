@@ -17,7 +17,8 @@
             <TextBox Text="{Binding TextForGeneration, Mode=TwoWay}"
                      TextChanged="__TextForGenerationChanged" 
                      AcceptsReturn="True"
-                     TextWrapping="Wrap"/>
+                     TextWrapping="Wrap"
+                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
         </controls:SwappableContentPanel.ContentPanel1>
         <controls:SwappableContentPanel.ContentPanel2>
             <Image Source="{Binding QRCode, Mode=TwoWay}"
