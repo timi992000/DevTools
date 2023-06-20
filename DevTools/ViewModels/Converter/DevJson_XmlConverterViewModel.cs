@@ -1,10 +1,7 @@
 ﻿using DevTools.Core.Attributes;
 using DevTools.Core.BaseClasses;
 using DevTools.Core.Extender;
-using Newtonsoft.Json;
 using System;
-using System.IO;
-using System.Xml;
 
 namespace DevTools.ViewModels.Converter
 {
@@ -57,18 +54,7 @@ namespace DevTools.ViewModels.Converter
 		{
 			try
 			{
-				if (XMLText.IsNullOrEmpty())
-				{
-					ExecuteWithoutDependendObjects(() => { JSONText = string.Empty; });
-					return;
-				}
-				var doc = new XmlDocument();
-				doc.LoadXml(XMLText);
-				var jsonString = JsonConvert.SerializeXmlNode(doc);
-				var formatJson = true;
-				if (formatJson)
-					jsonString = __FormatJson(jsonString);
-				ExecuteWithoutDependendObjects(() => { JSONText = jsonString; });
+				ExecuteWithoutDependendObjects(() => { JSONText = XMLText.XMLToJsonFormattedString(); });
 			}
 			catch (Exception ex)
 			{
@@ -82,15 +68,7 @@ namespace DevTools.ViewModels.Converter
 		{
 			try
 			{
-				if (JSONText.IsNullOrEmpty())
-				{
-					ExecuteWithoutDependendObjects(() => { XMLText = string.Empty; });
-					return;
-				}
-				var doc = JsonConvert.DeserializeXNode(JSONText);
-				if (doc == null)
-					return;
-				ExecuteWithoutDependendObjects(() => { XMLText = doc.ToString(); });
+				ExecuteWithoutDependendObjects(() => { XMLText = JSONText.JsonToXMLFormattedString(); });
 			}
 			catch (Exception ex)
 			{
@@ -98,24 +76,7 @@ namespace DevTools.ViewModels.Converter
 			}
 		}
 
-		private string __FormatJson(string jsonString)
-		{
-			try
-			{
-				using (var stringReader = new StringReader(jsonString))
-				using (var stringWriter = new StringWriter())
-				{
-					var jsonReader = new JsonTextReader(stringReader);
-					var jsonWriter = new JsonTextWriter(stringWriter) { Formatting = Newtonsoft.Json.Formatting.Indented };
-					jsonWriter.WriteToken(jsonReader);
-					return stringWriter.ToString();
-				}
-			}
-			catch (Exception)
-			{
-				return "";
-			}
-		}
+
 
 	}
 }

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Text;
+using System.Xml;
 
 namespace DevTools.Core.Extender
 {
@@ -26,15 +29,54 @@ namespace DevTools.Core.Extender
 		public static string ToUTF8String(this string value)
 				=> Encoding.Unicode.GetString(Encoding.UTF8.GetBytes(value));
 
-		public static bool IsEquals (this string value, string valueToCompare)
-    {
-      if(value == null &&  valueToCompare == null)
-        return true;
-      if ((value == null && valueToCompare != null) || value != null && valueToCompare == null)
-        return false;
+		public static bool IsEquals(this string value, string valueToCompare)
+		{
+			if (value == null && valueToCompare == null)
+				return true;
+			if ((value == null && valueToCompare != null) || value != null && valueToCompare == null)
+				return false;
 
-      return value.Equals(valueToCompare, StringComparison.InvariantCultureIgnoreCase);
-    }
+			return value.Equals(valueToCompare, StringComparison.InvariantCultureIgnoreCase);
+		}
+
+		public static string JsonToXMLFormattedString(this string jsonString)
+		{
+			try
+			{
+				if (jsonString.IsNullOrEmpty())
+					return string.Empty;
+				var doc = JsonConvert.DeserializeXNode(jsonString).ToString();
+				if (doc == null)
+					return string.Empty;
+				jsonString = doc.ToString();
+				return jsonString;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+
+		public static string XMLToJsonFormattedString(this string xmlString)
+		{
+			try
+			{
+				if (xmlString.IsNullOrEmpty())
+					return string.Empty;
+				var doc = new XmlDocument();
+				doc.LoadXml(xmlString);
+				var jsonString = JsonConvert.SerializeXmlNode(doc);
+				var formatJson = true;
+				if (formatJson)
+					jsonString = __FormatJson(jsonString);
+				return jsonString;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 
 		public static string GetRtfUnicodeEscapedString(this string value)
 		{
@@ -50,6 +92,26 @@ namespace DevTools.Core.Extender
 			}
 			return sb.ToString();
 		}
+
+		private static string __FormatJson(string jsonString)
+		{
+			try
+			{
+				using (var stringReader = new StringReader(jsonString))
+				using (var stringWriter = new StringWriter())
+				{
+					var jsonReader = new JsonTextReader(stringReader);
+					var jsonWriter = new JsonTextWriter(stringWriter) { Formatting = Newtonsoft.Json.Formatting.Indented };
+					jsonWriter.WriteToken(jsonReader);
+					return stringWriter.ToString();
+				}
+			}
+			catch (Exception)
+			{
+				return "";
+			}
+		}
+
 
 	}
 }

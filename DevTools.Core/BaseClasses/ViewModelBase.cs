@@ -135,6 +135,7 @@ namespace DevTools.Core.BaseClasses
 			}
 			catch (Exception ex)
 			{
+				throw;
 			}
 			finally
 			{
