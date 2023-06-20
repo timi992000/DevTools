@@ -12,58 +12,61 @@
                  Height="450"
                  Width="800"
                  WindowState="Maximized">
-  <mah:MetroWindow.Resources>
-    <Style TargetType="TextBlock">
-      <Setter Property="FontSize"
-              Value="15" />
-    </Style>
-    <Style x:Key="tbHeaderStyle"
-           TargetType="TextBlock">
-      <Setter Property="FontSize"
-              Value="20" />
-      <Setter Property="FontWeight"
-              Value="Bold" />
-    </Style>
-  </mah:MetroWindow.Resources>
-  <Grid Margin="10">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="Auto" />
-    </Grid.RowDefinitions>
-    <Grid x:Name="HeaderRow"
-          Grid.Row="0">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="Auto" />
-      </Grid.ColumnDefinitions>
-      <TextBlock Text="Dev Tools"
-                 Grid.Column="0"
-                 Style="{StaticResource tbHeaderStyle}" />
-      <mah:ToggleSwitch Grid.Column="2"
-                        Content="Darkmode"
-                        Command="{Binding [SwitchTheme]}"
-                        IsOn="{Binding DarkModeToggled, Mode=TwoWay}" />
+    <mah:MetroWindow.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize"
+                    Value="15" />
+        </Style>
+        <Style x:Key="tbHeaderStyle"
+               TargetType="TextBlock">
+            <Setter Property="FontSize"
+                    Value="20" />
+            <Setter Property="FontWeight"
+                    Value="Bold" />
+        </Style>
+    </mah:MetroWindow.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="HeaderRow"
+              Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Dev Tools"
+                       Grid.Column="0"
+                       Style="{StaticResource tbHeaderStyle}" />
+            <mah:ToggleSwitch Grid.Column="2"
+                              Content="Darkmode"
+                              Command="{Binding [SwitchTheme]}"
+                              IsOn="{Binding DarkModeToggled, Mode=TwoWay}" />
+        </Grid>
+        <TabControl Grid.Row="1"
+                    TabStripPlacement="Left">
+            <TabItem Header="Formatter">
+                <views:DevFormatterTabView />
+            </TabItem>
+            <TabItem Header="Checks">
+                <views:DevCheckTabView />
+            </TabItem>
+            <TabItem Header="Preview">
+                <views:DevPreviewTabView />
+            </TabItem>
+            <TabItem Header="Converter">
+                <views:DevConverterTabView />
+            </TabItem>
+            <TabItem Header="Generator">
+                <views:DevGeneratorTabView />
+            </TabItem>
+        </TabControl>
+        <Grid x:Name="BottomRow"
+              Grid.Row="2">
+            <TextBlock Text="Footer ....." />
+        </Grid>
     </Grid>
-    <TabControl Grid.Row="1"
-                TabStripPlacement="Left">
-      <TabItem Header="Checks">
-        <views:DevCheckTabView />
-      </TabItem>
-      <TabItem Header="Preview">
-        <views:DevPreviewTabView />
-      </TabItem>
-      <TabItem Header="Converter">
-        <views:DevConverterTabView />
-      </TabItem>
-      <TabItem Header="Generator">
-        <views:DevGeneratorTabView />
-      </TabItem>
-    </TabControl>
-    <Grid x:Name="BottomRow"
-          Grid.Row="2">
-      <TextBlock Text="Footer ....." />
-    </Grid>
-  </Grid>
 </mah:MetroWindow>
