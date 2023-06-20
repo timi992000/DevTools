@@ -3,13 +3,13 @@ using DevTools.Core.BaseClasses;
 using DevTools.Core.Extender;
 using MahApps.Metro.Controls;
 using Microsoft.Win32;
-using System.Threading;
 using System.Windows;
 
 namespace DevTools.ViewModels
 {
 	public class MainWindowViewModel : ViewModelBase
 	{
+		public static bool IsDarkMode { get; set; }
 		public MainWindowViewModel(MetroWindow mainWindow)
 		{
 			MainWindow = mainWindow;
@@ -22,7 +22,11 @@ namespace DevTools.ViewModels
 		public bool DarkModeToggled
 		{
 			get => Get<bool>();
-			set => Set(value);
+			set
+			{
+				Set(value);
+				MainWindowViewModel.IsDarkMode = value;
+			}
 		}
 
 		public void Execute_SwitchTheme()
@@ -40,17 +44,8 @@ namespace DevTools.ViewModels
 				if (!useLightTheme)
 					Execute_SwitchTheme();
 
-				DarkModeToggled = !useLightTheme; 
+				DarkModeToggled = !useLightTheme;
 			}
-
-			//for (int i = 0; i < 10; i++)
-			//{
-			//Inverse the windows theme every x Seconds
-			//	registryThemeKey.SetValue("SystemUsesLightTheme",i % 2 == 0 ? "1" : "0", RegistryValueKind.DWord);
-
-			//	Thread.Sleep(1000);
-			//}
-
 		}
 
 	}

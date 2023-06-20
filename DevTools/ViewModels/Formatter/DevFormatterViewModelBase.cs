@@ -1,9 +1,7 @@
-﻿using DevTools.Core.Attributes;
+﻿using ControlzEx.Theming;
+using DevTools.Core.Attributes;
 using DevTools.Core.BaseClasses;
-using DevTools.Core.Extender;
-using System;
 using System.Windows.Media;
-using System.Xml.Linq;
 
 namespace DevTools.ViewModels.Formatter
 {
@@ -11,6 +9,11 @@ namespace DevTools.ViewModels.Formatter
 	{
 		public DevFormatterViewModelBase()
 		{
+			ThemeManager.Current.ThemeChanged +=
+				(sender, e) =>
+				{
+					OnPropertyChanged(nameof(Foreground));
+				};
 		}
 
 		public string TextToFormat
@@ -30,13 +33,22 @@ namespace DevTools.ViewModels.Formatter
 			get => Get<bool>();
 			set => Set(value);
 		}
+
 		[DevDependsUpon(nameof(HasError))]
-		public Brush Foreground => HasError ? Brushes.Red : Brushes.White;
+		public Brush Foreground
+		{
+			get
+			{
+				if (HasError)
+					return Brushes.Red;
+				return MainWindowViewModel.IsDarkMode ? Brushes.White : Brushes.Black;
+			}
+		}
 
 		[DevDependsUpon(nameof(TextToFormat))]
 		public virtual void FormatText()
 		{
-		
+
 		}
 
 	}
