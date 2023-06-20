@@ -1,5 +1,6 @@
 ﻿using DevTools.Core.Commands;
 using MahApps.Metro.Controls;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,6 +13,7 @@ namespace DevTools.Controls
 	{
 		private RelayCommand _SwapCommand;
 		private eSwapMode _SwapMode;
+		public event EventHandler Swapped;
 		public SwappableContentPanel()
 		{
 			InitializeComponent();
@@ -135,6 +137,7 @@ namespace DevTools.Controls
 					}
 				}
 			}
+			Swapped?.Invoke(this, EventArgs.Empty);
 		}
 	}
 

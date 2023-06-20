@@ -20,6 +20,7 @@ namespace DevTools.Core.BaseClasses
 	{
 		private const string EXECUTE_PREFIX = "Execute_";
 		private const string CANEXECUTE_PREFIX = "CanExecute_";
+		private bool _SkipCheckingDependendMembers;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 		private readonly ConcurrentDictionary<string, object> _properties;
@@ -119,9 +120,27 @@ namespace DevTools.Core.BaseClasses
 			_properties[name] = value;
 			this[name] = value;
 			OnPropertyChanged(name);
-			__RefreshDependendObjects(name);
+			if (!_SkipCheckingDependendMembers)
+				__RefreshDependendObjects(name);
 		}
 		#endregion
+
+		public void ExecuteWithoutDependendObjects(Action action)
+		{
+			try
+			{
+				_SkipCheckingDependendMembers = true;
+				action?.Invoke();
+				_SkipCheckingDependendMembers = false;
+			}
+			catch (Exception ex)
+			{
+			}
+			finally
+			{
+				_SkipCheckingDependendMembers = false;
+			}
+		}
 
 		public void ValidateResult(IDevOperationResult result, [CallerMemberName] string methodName = "")
 		{
@@ -250,7 +269,7 @@ namespace DevTools.Core.BaseClasses
 										ShowErrorMessage(ex);
 									}
 								}
-									
+
 							}
 							else
 								OnPropertyChanged(dependsUponObj.Key);

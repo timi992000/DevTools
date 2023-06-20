@@ -8,13 +8,28 @@
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800"
-             x:Name="This">
+             x:Name="This"
+             Focusable="False">
+
+    <UserControl.Resources>
+        <Style x:Key="PanelBorderStyle"
+               TargetType="Border">
+            <Setter Property="BorderBrush"
+                    Value="Gray" />
+            <Setter Property="BorderThickness"
+                    Value="3" />
+            <!--<Setter Property="CornerRadius"
+                    Value="50" />-->
+        </Style>
+    </UserControl.Resources>
 
 
     <ContentControl>
         <ContentControl.Style>
 
             <Style TargetType="ContentControl">
+                <Setter Property="Focusable"
+                        Value="False" />
                 <Style.Triggers>
                     <DataTrigger Value="{x:Static local:eSwapMode.Horizontal}"
                                  Binding="{Binding SwapMode, ElementName=This}">
@@ -33,7 +48,8 @@
 
                                     <Border Grid.Column="0"
                                             Grid.Row="0"
-                                            x:Name="ContentBorderHorizontalLeft">
+                                            x:Name="ContentBorderHorizontalLeft"
+                                            Style="{StaticResource PanelBorderStyle}">
                                         <ContentControl Content="{Binding ContentPanel1, ElementName=This}" />
                                     </Border>
 
@@ -50,7 +66,8 @@
                                     <Border Grid.Column="2"
                                             Grid.Row="0"
                                             Height="Auto"
-                                            x:Name="ContentBorderHorizontalRight">
+                                            x:Name="ContentBorderHorizontalRight"
+                                            Style="{StaticResource PanelBorderStyle}">
                                         <ContentControl Content="{Binding ContentPanel2, ElementName=This}" />
                                     </Border>
 
@@ -75,7 +92,8 @@
 
                                     <Border Grid.Row="0"
                                             Grid.Column="0"
-                                            x:Name="ContentBorderVerticalTop">
+                                            x:Name="ContentBorderVerticalTop"
+                                            Style="{StaticResource PanelBorderStyle}">
                                         <ContentControl Content="{Binding ContentPanel1, ElementName=This}" />
                                     </Border>
 
@@ -91,7 +109,8 @@
 
                                     <Border Grid.Row="2"
                                             Grid.Column="0"
-                                            x:Name="ContentBorderVerticalBottom">
+                                            x:Name="ContentBorderVerticalBottom"
+                                            Style="{StaticResource PanelBorderStyle}">
                                         <ContentControl Content="{Binding ContentPanel2, ElementName=This}" />
                                     </Border>
 

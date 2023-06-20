@@ -11,5 +11,8 @@
         <TabItem Header="File to Base64">
             <converter:DevFileToBase64ConverterView />
         </TabItem>
+        <TabItem Header="{Binding JSON_XMLTabName}">
+            <converter:DevJson_XmlConverterView DataContext="{Binding JSONXMLConverterViewModel}"/>
+        </TabItem>
     </TabControl>
 </UserControl>

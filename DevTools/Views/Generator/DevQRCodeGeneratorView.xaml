@@ -15,10 +15,10 @@
                                     controls:SwappableContentPanel.SwapMode="Horizontal">
         <controls:SwappableContentPanel.ContentPanel1>
             <TextBox Text="{Binding TextForGeneration, Mode=TwoWay}"
-                     TextChanged="__TextForGenerationChanged" 
+                     TextChanged="__TextForGenerationChanged"
                      AcceptsReturn="True"
                      TextWrapping="Wrap"
-                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                     ScrollViewer.VerticalScrollBarVisibility="Auto" />
         </controls:SwappableContentPanel.ContentPanel1>
         <controls:SwappableContentPanel.ContentPanel2>
             <Image Source="{Binding QRCode, Mode=TwoWay}"
