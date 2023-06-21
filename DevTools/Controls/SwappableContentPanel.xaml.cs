@@ -95,9 +95,41 @@ namespace DevTools.Controls
 		}
 		#endregion
 
+		#region BorderStyle
+		public static Style GetPanelBorderStyle(DependencyObject obj)
+		{
+			return (Style)obj.GetValue(PanelBorderStyleProperty);
+		}
+
+		public static void SetPanelBorderStyle(DependencyObject obj, Style value)
+		{
+			obj.SetValue(PanelBorderStyleProperty, value);
+		}
+
+		// Using a DependencyProperty as the backing store for PanelBorderStyle.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty PanelBorderStyleProperty =
+				DependencyProperty.RegisterAttached("PanelBorderStyle", typeof(Style), typeof(SwappableContentPanel), new PropertyMetadata(null, __PanelBorderStyleChanged));
+
+		private static void __PanelBorderStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if (d is SwappableContentPanel swappableContentPanel && e.NewValue is Style stl)
+			{
+				if (!swappableContentPanel.IsLoaded)
+				{
+					swappableContentPanel.Loaded += (sender, e) =>
+					{
+						swappableContentPanel.__UpdatePanelBorderStyle(stl);
+					};
+				}
+				else
+					swappableContentPanel.__UpdatePanelBorderStyle(stl);
+			}
+		}
+		#endregion
+
 		private void __SwapPanels()
 		{
-			if (GetSwapMode(this as SwappableContentPanel) == eSwapMode.Horizontal)
+			if (GetSwapMode(this) == eSwapMode.Horizontal)
 			{
 				var leftSide = this.FindChild<Border>("ContentBorderHorizontalLeft");
 				var rightSide = this.FindChild<Border>("ContentBorderHorizontalRight");
@@ -139,6 +171,35 @@ namespace DevTools.Controls
 			}
 			Swapped?.Invoke(this, EventArgs.Empty);
 		}
+
+		private void __UpdatePanelBorderStyle(Style style)
+		{
+			if (GetSwapMode(this) == eSwapMode.Horizontal)
+			{
+				var leftSide = this.FindChild<Border>("ContentBorderHorizontalLeft");
+				var rightSide = this.FindChild<Border>("ContentBorderHorizontalRight");
+
+				if (leftSide != null && rightSide != null)
+				{
+					leftSide.Style = style;
+					rightSide.Style = style;
+				}
+			}
+			else
+			{
+				var topSide = this.FindChild<Border>("ContentBorderVerticalTop");
+				var bottomSide = this.FindChild<Border>("ContentBorderVerticalBottom");
+
+				if (topSide != null && bottomSide != null)
+				{
+					topSide.Style = style;
+					bottomSide.Style = style;
+				}
+			}
+		}
+
+
+
 	}
 
 	public enum eSwapMode

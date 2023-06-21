@@ -17,6 +17,12 @@
     </UserControl.Resources>
 
     <controls:SwappableContentPanel Swapped="__Swapped">
+        <controls:SwappableContentPanel.PanelBorderStyle>
+            <Style TargetType="Border">
+                <Setter Property="BorderThickness"
+                        Value="0" />
+            </Style>
+        </controls:SwappableContentPanel.PanelBorderStyle>
         <controls:SwappableContentPanel.ContentPanel1>
             <Grid>
                 <Grid.RowDefinitions>
