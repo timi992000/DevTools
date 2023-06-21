@@ -10,19 +10,26 @@
              d:DesignWidth="800">
 
     <UserControl.Resources>
-        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+        <Style x:Key="TextBlockStyle"
+               TargetType="TextBlock">
             <Setter Property="FontSize"
                     Value="20" />
         </Style>
     </UserControl.Resources>
 
     <controls:SwappableContentPanel Swapped="__Swapped">
-        <controls:SwappableContentPanel.PanelBorderStyle>
+        <controls:SwappableContentPanel.FirstPanelBorderStyle>
             <Style TargetType="Border">
-                <Setter Property="BorderThickness"
-                        Value="0" />
+                <!--Empty style is also an override
+                We dont want to have a border on panels here-->
             </Style>
-        </controls:SwappableContentPanel.PanelBorderStyle>
+        </controls:SwappableContentPanel.FirstPanelBorderStyle>
+        <controls:SwappableContentPanel.SecondPanelBorderStyle>
+            <Style TargetType="Border">
+                <!--Empty style is also an override
+                We dont want to have a border on panels here-->
+            </Style>
+        </controls:SwappableContentPanel.SecondPanelBorderStyle>
         <controls:SwappableContentPanel.ContentPanel1>
             <Grid>
                 <Grid.RowDefinitions>
@@ -32,7 +39,7 @@
 
                 <TextBlock Text="XML"
                            Grid.Row="0"
-                           Style="{Binding Source={StaticResource TextBlockStyle}}"/>
+                           Style="{Binding Source={StaticResource TextBlockStyle}}" />
 
                 <TextBox Grid.Row="1"
                          Margin="0 10 0 0"

@@ -13,6 +13,12 @@
                                     VerticalAlignment="Stretch"
                                     VerticalContentAlignment="Stretch"
                                     controls:SwappableContentPanel.SwapMode="Horizontal">
+        <controls:SwappableContentPanel.SecondPanelBorderStyle>
+            <Style TargetType="Border">
+                <!--Empty style is also an override
+                We dont want to have a border on panels here-->
+            </Style>
+        </controls:SwappableContentPanel.SecondPanelBorderStyle>
         <controls:SwappableContentPanel.ContentPanel1>
             <TextBox Text="{Binding TextForGeneration, Mode=TwoWay}"
                      TextChanged="__TextForGenerationChanged"

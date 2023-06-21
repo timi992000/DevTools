@@ -12,8 +12,8 @@ namespace DevTools.Controls
 	public partial class SwappableContentPanel : UserControl
 	{
 		private RelayCommand _SwapCommand;
-		private eSwapMode _SwapMode;
 		public event EventHandler Swapped;
+
 		public SwappableContentPanel()
 		{
 			InitializeComponent();
@@ -91,26 +91,25 @@ namespace DevTools.Controls
 
 		private static void __SwapModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-
 		}
 		#endregion
 
-		#region BorderStyle
-		public static Style GetPanelBorderStyle(DependencyObject obj)
+		#region FirstPanelBorderStyle
+		public static Style GetFirstPanelBorderStyle(DependencyObject obj)
 		{
-			return (Style)obj.GetValue(PanelBorderStyleProperty);
+			return (Style)obj.GetValue(FirstPanelBorderStyleProperty);
 		}
 
-		public static void SetPanelBorderStyle(DependencyObject obj, Style value)
+		public static void SetFirstPanelBorderStyle(DependencyObject obj, Style value)
 		{
-			obj.SetValue(PanelBorderStyleProperty, value);
+			obj.SetValue(FirstPanelBorderStyleProperty, value);
 		}
 
-		// Using a DependencyProperty as the backing store for PanelBorderStyle.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty PanelBorderStyleProperty =
-				DependencyProperty.RegisterAttached("PanelBorderStyle", typeof(Style), typeof(SwappableContentPanel), new PropertyMetadata(null, __PanelBorderStyleChanged));
+		// Using a DependencyProperty as the backing store for FirstPanelBorderStyle.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty FirstPanelBorderStyleProperty =
+				DependencyProperty.RegisterAttached("FirstPanelBorderStyle", typeof(Style), typeof(SwappableContentPanel), new PropertyMetadata(null, __FirstPanelBorderStyleChanged));
 
-		private static void __PanelBorderStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		private static void __FirstPanelBorderStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			if (d is SwappableContentPanel swappableContentPanel && e.NewValue is Style stl)
 			{
@@ -118,11 +117,43 @@ namespace DevTools.Controls
 				{
 					swappableContentPanel.Loaded += (sender, e) =>
 					{
-						swappableContentPanel.__UpdatePanelBorderStyle(stl);
+						swappableContentPanel.__UpdateFirstPanelBorderStyle(stl);
 					};
 				}
 				else
-					swappableContentPanel.__UpdatePanelBorderStyle(stl);
+					swappableContentPanel.__UpdateFirstPanelBorderStyle(stl);
+			}
+		}
+		#endregion
+
+		#region SecondPanelBorderStyle
+		public static Style GetSecondPanelBorderStyle(DependencyObject obj)
+		{
+			return (Style)obj.GetValue(SecondPanelBorderStyleProperty);
+		}
+
+		public static void SetSecondPanelBorderStyle(DependencyObject obj, Style value)
+		{
+			obj.SetValue(SecondPanelBorderStyleProperty, value);
+		}
+
+		// Using a DependencyProperty as the backing store for SecondPanelBorderStyle.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty SecondPanelBorderStyleProperty =
+				DependencyProperty.RegisterAttached("SecondPanelBorderStyle", typeof(Style), typeof(SwappableContentPanel), new PropertyMetadata(null, __SecondPanelBorderStyleChanged));
+
+		private static void __SecondPanelBorderStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if (d is SwappableContentPanel swappableContentPanel && e.NewValue is Style stl)
+			{
+				if (!swappableContentPanel.IsLoaded)
+				{
+					swappableContentPanel.Loaded += (sender, e) =>
+					{
+						swappableContentPanel.__UpdateSecondPanelBorderStyle(stl);
+					};
+				}
+				else
+					swappableContentPanel.__UpdateSecondPanelBorderStyle(stl);
 			}
 		}
 		#endregion
@@ -172,34 +203,40 @@ namespace DevTools.Controls
 			Swapped?.Invoke(this, EventArgs.Empty);
 		}
 
-		private void __UpdatePanelBorderStyle(Style style)
+		private void __UpdateFirstPanelBorderStyle(Style style)
 		{
 			if (GetSwapMode(this) == eSwapMode.Horizontal)
 			{
 				var leftSide = this.FindChild<Border>("ContentBorderHorizontalLeft");
-				var rightSide = this.FindChild<Border>("ContentBorderHorizontalRight");
-
-				if (leftSide != null && rightSide != null)
-				{
+				if (leftSide != null)
 					leftSide.Style = style;
-					rightSide.Style = style;
-				}
 			}
 			else
 			{
 				var topSide = this.FindChild<Border>("ContentBorderVerticalTop");
-				var bottomSide = this.FindChild<Border>("ContentBorderVerticalBottom");
 
-				if (topSide != null && bottomSide != null)
-				{
+				if (topSide != null)
 					topSide.Style = style;
-					bottomSide.Style = style;
-				}
 			}
 		}
 
+		private void __UpdateSecondPanelBorderStyle(Style style)
+		{
+			if (GetSwapMode(this) == eSwapMode.Horizontal)
+			{
+				var rightSide = this.FindChild<Border>("ContentBorderHorizontalRight");
 
+				if (rightSide != null)
+					rightSide.Style = style;
+			}
+			else
+			{
+				var bottomSide = this.FindChild<Border>("ContentBorderVerticalBottom");
 
+				if (bottomSide != null)
+					bottomSide.Style = style;
+			}
+		}
 	}
 
 	public enum eSwapMode
