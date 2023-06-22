@@ -112,6 +112,78 @@ namespace DevTools.Core.Extender
 			}
 		}
 
+		public static string GetFileExtensionFromBase64String(this string base64String)
+		{
+			var data = base64String.Substring(0, 5);
+
+			switch (data.ToUpper())
+			{
+				case "IVBOR":
+					return "png";
+				case "/9J/4":
+					return "jpg";
+				case "AAAAF":
+				case "AAAAG":
+					return "mp4";
+				case "JVBER":
+					return "pdf";
+				case "AAABA":
+					return "ico";
+				case "UMFYI":
+					return "rar";
+				case "E1XYD":
+					return "rtf";
+				case "MQOWM":
+				case "77U/M":
+					return "srt";
+				case "UESDB":
+					return "zip";
+				case "0M8R4":
+					return "msi";
+				case "TVQQA":
+				case "TVPQA":
+					return "exe";
+				case "C2VWP":
+					return "csv";
+				case "TELTL":
+				case "U1PKC":
+				case "QNVKZ":
+				case "R3JVD":
+				case "U29TB":
+					return "txt";
+				case "PGRPD":
+					return "";
+				case "77U/D":
+					return "cs";
+				case "UKLGR":
+					return "wav";
+				case "QKVHS":
+					return "ics";
+				case "A9MIM":
+					return "kdbx";
+				case "U1FMA":
+					return "db";
+				case "PFVZZ":
+					return "vssettings";
+				case "LY8GR":
+					return "eos";
+				case "TAAAA":
+					return "lnk";
+				case "Y2QGQ":
+				case "QGVJA":
+				case "DQONC":
+					return "bat";
+				case "ZM9YI":
+					return "cmd";
+				case "GKXFO":
+					return "mkv";
+				case "CMVKA":
+					return "rdp";
+				default:
+					return string.Empty;
+			}
+		}
+
 
 	}
 }

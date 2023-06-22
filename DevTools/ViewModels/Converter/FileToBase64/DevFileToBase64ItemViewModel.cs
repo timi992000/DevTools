@@ -1,20 +1,16 @@
 ﻿using DevTools.Core.BaseClasses;
 using DevTools.Core.Extender;
-using QRCoder;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace DevTools.ViewModels.Converter.FileToBase64
 {
-	public class DevConvertedBase64ItemViewModel : ViewModelBase
+	public class DevFileToBase64ItemViewModel : ViewModelBase
 	{
 		private readonly DevFileToBase64ConverterViewModel _ParentVM;
-		public DevConvertedBase64ItemViewModel(string fileLocation, DevFileToBase64ConverterViewModel devFileToBase64ConverterViewModel)
+		public DevFileToBase64ItemViewModel(string fileLocation, DevFileToBase64ConverterViewModel devFileToBase64ConverterViewModel)
 		{
 			FileLocation = fileLocation;
 			_ParentVM = devFileToBase64ConverterViewModel;
@@ -35,7 +31,7 @@ namespace DevTools.ViewModels.Converter.FileToBase64
 
 		public void Execute_Remove()
 		{
-			_ParentVM.RemoveItem(this);
+			_ParentVM.RemoveFileItem(this);
 		}
 
 		public void Execute_Copy()
@@ -54,11 +50,14 @@ namespace DevTools.ViewModels.Converter.FileToBase64
 					if (!File.Exists(FileLocation))
 						return;
 					byte[] bytes = File.ReadAllBytes(FileLocation);
-					Converted = Convert.ToBase64String(bytes);
+					Application.Current.Dispatcher.Invoke(() => {
+						Converted = Convert.ToBase64String(bytes);
+						_ParentVM.__AddFileExtension(this);
+					});
 				}
 				catch (Exception ex)
 				{
-					ShowErrorMessage(ex);
+					//ShowErrorMessage(ex);
 				}
 			});
 		}

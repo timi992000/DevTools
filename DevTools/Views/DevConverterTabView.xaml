@@ -8,8 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <TabControl>
-        <TabItem Header="File to Base64">
-            <converter:DevFileToBase64ConverterView />
+        <TabItem Header="{Binding File_Base64TabName}">
+            <converter:DevFileToBase64ConverterView DataContext="{Binding File_Base64ConverterViewModel}"/>
         </TabItem>
         <TabItem Header="{Binding JSON_XMLTabName}">
             <converter:DevJson_XmlConverterView DataContext="{Binding JSONXMLConverterViewModel}"/>

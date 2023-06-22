@@ -11,7 +11,20 @@ namespace DevTools.Views.Converter
 		public DevFileToBase64ConverterView()
 		{
 			InitializeComponent();
-			DataContext = new DevFileToBase64ConverterViewModel();
+		}
+
+		private void __Swapped(object sender, System.EventArgs e)
+		{
+			if (DataContext is DevFileToBase64ConverterViewModel vm)
+			{
+				vm.Swapped();
+			}
+		}
+
+		private void __Base64StringChanged(object sender, TextChangedEventArgs e)
+		{
+			if (sender is TextBox tb && tb.DataContext is DevBase64ToFileItemViewModel vm)
+				vm.EncodedBase64String = tb.Text;
 		}
 	}
 }

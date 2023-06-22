@@ -143,6 +143,20 @@ namespace DevTools.Core.BaseClasses
 			}
 		}
 
+		public void OnCanExecuteChanged(string commandName)
+		{
+			try
+			{
+				if (!commandName.StartsWith(EXECUTE_PREFIX))
+					return;
+				var command = Get<RelayCommand>(commandName.Substring(EXECUTE_PREFIX.Length));
+				if (command != null)
+					command.OnCanExecuteChanged();
+			}
+			catch (Exception)
+			{
+			}
+		}
 		public void ValidateResult(IDevOperationResult result, [CallerMemberName] string methodName = "")
 		{
 			if (result == null)
