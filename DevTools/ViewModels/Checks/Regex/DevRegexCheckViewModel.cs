@@ -70,13 +70,13 @@ namespace DevTools.ViewModels.Checks.Regex
 +91 123.456.7890
 +91 123456_7890
 +91 123 456 7890");
-				RegexExpression = @"^\+?(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$";
+				RegexExpression = @"(\d[\d-. ]+)?(\([\d-. ]+\))?[\d-. ]+\d$";
 			}
-      catch (Exception ex)
-      {
-        ShowErrorMessage(ex);
-      }
-    }
+			catch (Exception ex)
+			{
+				ShowErrorMessage(ex);
+			}
+		}
 
 		public void RemoveItem(DevRegexToCheckItemViewModel item)
 		{
@@ -87,7 +87,7 @@ namespace DevTools.ViewModels.Checks.Regex
 		private DevRegexToCheckItemViewModel __NewVM(string stringToCheck)
 		{
 			var vm = new DevRegexToCheckItemViewModel(this);
-			vm.TextToCheck = stringToCheck;
+			vm.TempText = stringToCheck;
 			vm.PropertyChanged += (sender, e) =>
 			{
 				__AddEmptyItemIfNeeded();
@@ -116,11 +116,11 @@ namespace DevTools.ViewModels.Checks.Regex
 					RegexExpressionChanged?.Invoke(this, EventArgs.Empty);
 				}
 			}
-      catch (Exception ex)
-      {
-        ShowErrorMessage(ex);
-      }
-    }
+			catch (Exception ex)
+			{
+				ShowErrorMessage(ex);
+			}
+		}
 
 	}
 }

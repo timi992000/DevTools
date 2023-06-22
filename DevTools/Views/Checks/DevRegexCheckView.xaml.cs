@@ -22,8 +22,17 @@ namespace DevTools.Views.Checks
 
 		private void __ItemToCheckChanged(object sender, TextChangedEventArgs e)
 		{
-			if (sender is TextBox tb && tb.DataContext is DevRegexToCheckItemViewModel vm)
-				vm.TextToCheck = tb.Text;
+			if (sender is RichTextBox tb && tb.DataContext is DevRegexToCheckItemViewModel vm)
+				vm.RefreshRegexMatching();
+		}
+
+		private void __Loaded(object sender, System.Windows.RoutedEventArgs e)
+		{
+			if (sender is RichTextBox tb && tb.DataContext is DevRegexToCheckItemViewModel vm)
+			{
+				vm.ItemRichTextBox = tb;
+				vm.SetRichTextBoxText();
+			}
 		}
 	}
 }
