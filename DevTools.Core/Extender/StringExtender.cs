@@ -93,7 +93,16 @@ namespace DevTools.Core.Extender
 			return sb.ToString();
 		}
 
-		private static string __FormatJson(string jsonString)
+		public static bool IsNullEmptyOrWhitespace(this string value)
+		{
+			return string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value);
+		}
+        public static bool IsNotNullEmptyOrWhitespace(this string value)
+        {
+			return !IsNullEmptyOrWhitespace(value);
+        }
+
+        private static string __FormatJson(string jsonString)
 		{
 			try
 			{

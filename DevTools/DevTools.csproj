@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="App.config" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1823.32" />
@@ -17,6 +21,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DevTools.Core\DevTools.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
