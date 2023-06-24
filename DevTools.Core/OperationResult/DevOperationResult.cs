@@ -1,6 +1,8 @@
-﻿using System;
+﻿using DevTools.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +12,12 @@ namespace DevTools.Core.OperationResult
 	[Serializable]
 	public class DevOperationResult<T> : IDevOperationResult
 	{
-		public DevOperationResult()
+		public DevOperationResult([CallerMemberName]string operationName = "")
 		{
 			Messages = new List<string>();
 			Succeeded = false;
 			OperationResult = default;
+			OperationName = operationName;
 		}
 
 		[DataMember]
@@ -26,10 +29,13 @@ namespace DevTools.Core.OperationResult
 		[DataMember]
 		public List<string> Messages { get; set; }
 
+		[DataMember]
+		public string OperationName { get; private set; }
 
-		public static DevOperationResult<T> Ok(T operationResult)
+
+		public static DevOperationResult<T> Ok(T operationResult, [CallerMemberName]string operationName = "")
 		{
-			return new DevOperationResult<T>
+			return new DevOperationResult<T>(operationName)
 			{
 				Succeeded = true,
 				OperationResult = operationResult,
@@ -37,16 +43,18 @@ namespace DevTools.Core.OperationResult
 			};
 		}
 
-		public static DevOperationResult<T> Fail(string message)
-				=> Fail(new List<string> { message });
+		public static DevOperationResult<T> Fail(string message, [CallerMemberName]string operationName = "")
+				=> Fail(new List<string> { message }, operationName);
 
-		public static DevOperationResult<T> Fail(List<string> messages)
+		public static DevOperationResult<T> Fail(List<string> messages, [CallerMemberName]string operationName = "")
 		{
-			return new DevOperationResult<T>
+			return new DevOperationResult<T>(operationName)
 			{
 				Succeeded = false,
 				Messages = messages,
 			};
 		}
+
+		
 	}
 }
