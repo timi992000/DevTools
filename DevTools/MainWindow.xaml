@@ -42,9 +42,8 @@
                        Grid.Column="0"
                        Style="{StaticResource tbHeaderStyle}" />
             <mah:ToggleSwitch Grid.Column="2"
-                              Content="Darkmode"
-                              Command="{Binding [SwitchTheme]}"
-                              IsOn="{Binding DarkModeToggled, Mode=TwoWay}" />
+                              Content="Configuration"
+                              IsOn="{Binding ConfigurationOpen, Mode=TwoWay}" />
         </Grid>
         <TabControl Grid.Row="1"
                     TabStripPlacement="Left">
@@ -69,4 +68,37 @@
             <TextBlock Text="Footer ....." />
         </Grid>
     </Grid>
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout Header="Configuration"
+                        IsOpen="{Binding ConfigurationOpen, Mode=TwoWay}"
+                        CloseButtonVisibility="Collapsed"
+                        Position="Right">
+                <TabControl>
+                    <TabItem Header="Theming">
+                        <Grid Margin="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <mah:ToggleSwitch Grid.ColumnSpan="2"
+                                              Grid.Column="0"
+                                              Grid.Row="0"
+                                              Content="Darkmode"
+                                              Command="{Binding [SwitchTheme]}"
+                                              IsOn="{Binding DarkModeToggled, Mode=TwoWay}" />
+
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Anything else" />
+                </TabControl>
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+
+
 </mah:MetroWindow>

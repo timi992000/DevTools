@@ -29,6 +29,12 @@ namespace DevTools.ViewModels
 			}
 		}
 
+		public bool ConfigurationOpen
+		{
+			get => Get<bool>();
+			set => Set(value);
+		}
+
 		public void Execute_SwitchTheme()
 		{
 			var currentTheme = ThemeManager.Current.DetectTheme();
