@@ -22,6 +22,22 @@ namespace DevTools.ViewModels
 
 		public static MetroWindow MainWindow { get; set; }
 
+		public bool DarkModeToggled
+		{
+			get => Get<bool>();
+			set
+			{
+				Set(value);
+				MainWindowViewModel.IsDarkMode = value;
+			}
+		}
+
+		public bool ConfigurationOpen
+		{
+			get => Get<bool>();
+			set => Set(value);
+		}
+
 		public void Execute_SwitchTheme()
 		{
 			var currentTheme = ThemeManager.Current.DetectTheme();
