@@ -1,8 +1,11 @@
 ﻿using ControlzEx.Theming;
 using DevTools.Core.BaseClasses;
+using DevTools.Core.Configuration;
+using DevTools.Core.Exceptions;
 using DevTools.Core.Extender;
 using MahApps.Metro.Controls;
 using Microsoft.Win32;
+using System;
 using System.Windows;
 
 namespace DevTools.ViewModels
@@ -43,14 +46,22 @@ namespace DevTools.ViewModels
 		}
 		private void __DetectWinThemeAndSetStart()
 		{
-			var registryThemeKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", true);
-			if (registryThemeKey != null)
+			try
 			{
-				var useLightTheme = registryThemeKey.GetValue("SystemUsesLightTheme").ToStringValue() == "1";
-				if (!useLightTheme)
-					Execute_SwitchTheme();
+                var DarkMode = DevToolsConfiguration.Instance.Get("DarkMode").ValidateAndRetrieveResult();
+                var AccentColor = DevToolsConfiguration.Instance.Get("AccentColor").ValidateAndRetrieveResult();
 
-				DarkModeToggled = !useLightTheme;
+                ThemeManager.Current.ChangeTheme(Application.Current, $"{(DarkMode.Equals("True") ? "Dark" : "Light")}.{AccentColor}");
+				IsDarkMode = DarkMode.Equals("True");
+            } 
+			catch(OperationFailedException ex)
+			{
+				MessageBox.Show(ex.Message);
+			} 
+			catch(Exception ex)
+			{
+				MessageBox.Show(ex.ToString());
+				Environment.Exit(1);
 			}
 		}
 

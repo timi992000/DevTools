@@ -19,4 +19,10 @@
     <ProjectReference Include="..\DevTools.Core\DevTools.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
