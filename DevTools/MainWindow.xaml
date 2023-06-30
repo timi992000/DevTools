@@ -12,93 +12,88 @@
                  Height="450"
                  Width="800"
                  WindowState="Maximized">
-    <mah:MetroWindow.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontSize"
-                    Value="15" />
-        </Style>
-        <Style x:Key="tbHeaderStyle"
-               TargetType="TextBlock">
-            <Setter Property="FontSize"
-                    Value="20" />
-            <Setter Property="FontWeight"
-                    Value="Bold" />
-        </Style>
-    </mah:MetroWindow.Resources>
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid x:Name="HeaderRow"
-              Grid.Row="0">
-            <Grid.ColumnDefinitions>
+  <mah:MetroWindow.Resources>
+    <Style TargetType="TextBlock">
+      <Setter Property="FontSize"
+              Value="15" />
+    </Style>
+    <Style x:Key="tbHeaderStyle"
+           TargetType="TextBlock">
+      <Setter Property="FontSize"
+              Value="20" />
+      <Setter Property="FontWeight"
+              Value="Bold" />
+    </Style>
+  </mah:MetroWindow.Resources>
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid x:Name="HeaderRow"
+          Grid.Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <TextBlock Text="Dev Tools"
+                 Grid.Column="0"
+                 Style="{StaticResource tbHeaderStyle}" />
+      <mah:ToggleSwitch Grid.Column="2"
+                        Content="Configuration"
+                        IsOn="{Binding ConfigurationOpen, Mode=TwoWay}" />
+    </Grid>
+    <TabControl Grid.Row="1"
+                TabStripPlacement="Left">
+      <TabItem Header="Formatter">
+        <views:DevFormatterTabView />
+      </TabItem>
+      <TabItem Header="Checks">
+        <views:DevCheckTabView />
+      </TabItem>
+      <TabItem Header="Preview">
+        <views:DevPreviewTabView />
+      </TabItem>
+      <TabItem Header="Converter">
+        <views:DevConverterTabView />
+      </TabItem>
+      <TabItem Header="Generator">
+        <views:DevGeneratorTabView />
+      </TabItem>
+    </TabControl>
+    <Grid x:Name="BottomRow"
+          Grid.Row="2">
+      <TextBlock Text="Footer ....." />
+    </Grid>
+  </Grid>
+  <mah:MetroWindow.Flyouts>
+    <mah:FlyoutsControl>
+      <mah:Flyout Header="Configuration"
+                  IsOpen="{Binding ConfigurationOpen, Mode=TwoWay}"
+                  Position="Right">
+        <TabControl>
+          <TabItem Header="Theming">
+            <Grid Margin="5">
+              <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="Dev Tools"
-                       Grid.Column="0"
-                       Style="{StaticResource tbHeaderStyle}" />
-            <mah:ToggleSwitch Grid.Column="2"
-                              Content="Configuration"
-                              IsOn="{Binding ConfigurationOpen, Mode=TwoWay}" />
-        </Grid>
-        <TabControl Grid.Row="1"
-                    TabStripPlacement="Left">
-            <TabItem Header="Formatter">
-                <views:DevFormatterTabView />
-            </TabItem>
-            <TabItem Header="Checks">
-                <views:DevCheckTabView />
-            </TabItem>
-            <TabItem Header="Preview">
-                <views:DevPreviewTabView />
-            </TabItem>
-            <TabItem Header="Converter">
-                <views:DevConverterTabView />
-            </TabItem>
-            <TabItem Header="Generator">
-                <views:DevGeneratorTabView />
-            </TabItem>
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <mah:ToggleSwitch Grid.ColumnSpan="2"
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                Content="Darkmode"
+                                Command="{Binding [SwitchTheme]}"
+                                IsOn="{Binding IsDarkMode, Mode=TwoWay}" />
+            </Grid>
+          </TabItem>
+          <TabItem Header="Anything else" />
         </TabControl>
-        <Grid x:Name="BottomRow"
-              Grid.Row="2">
-            <TextBlock Text="Footer ....." />
-        </Grid>
-    </Grid>
-    <mah:MetroWindow.Flyouts>
-        <mah:FlyoutsControl>
-            <mah:Flyout Header="Configuration"
-                        IsOpen="{Binding ConfigurationOpen, Mode=TwoWay}"
-                        CloseButtonVisibility="Collapsed"
-                        Position="Right">
-                <TabControl>
-                    <TabItem Header="Theming">
-                        <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <mah:ToggleSwitch Grid.ColumnSpan="2"
-                                              Grid.Column="0"
-                                              Grid.Row="0"
-                                              Content="Darkmode"
-                                              Command="{Binding [SwitchTheme]}"
-                                              IsOn="{Binding DarkModeToggled, Mode=TwoWay}" />
-
-                        </Grid>
-                    </TabItem>
-                    <TabItem Header="Anything else" />
-                </TabControl>
-            </mah:Flyout>
-        </mah:FlyoutsControl>
-    </mah:MetroWindow.Flyouts>
-
-
+      </mah:Flyout>
+    </mah:FlyoutsControl>
+  </mah:MetroWindow.Flyouts>
 </mah:MetroWindow>
