@@ -1,5 +1,6 @@
 ﻿using DevTools.Core.Attributes;
 using DevTools.Core.Extender;
+using DevTools.Core.Samples;
 using System;
 using System.IO;
 using System.Text;
@@ -38,7 +39,7 @@ namespace DevTools.ViewModels.Preview
 
         public void Execute_SetSample()
         {
-            __SetSampleText();
+            Text = TextSamples.XMLSampleText;
         }
 
         [DevDependsUpon(nameof(Text))]
@@ -64,78 +65,6 @@ namespace DevTools.ViewModels.Preview
                 }
 
             }
-        }
-
-        private void __SetSampleText()
-        {
-            Text = @"<UserControl
-        xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
-        xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"">
-
-    <Grid Margin=""10"" >
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=""Auto""/>
-            <ColumnDefinition Width=""Auto""/>
-        </Grid.ColumnDefinitions>
-
-        <Grid Grid.Column=""0"">
-            <Grid.RowDefinitions>
-                <RowDefinition Height=""Auto""/>
-                <RowDefinition Height=""*""/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Text=""Germany""
-                       Grid.Row=""0""
-											 FontSize=""20""/>
-
-            <Grid Grid.Row=""1"">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=""Auto""/>
-                    <ColumnDefinition Width=""Auto""/>
-                    <ColumnDefinition Width=""Auto""/>
-                </Grid.ColumnDefinitions>
-
-                <Rectangle Fill=""Black""
-                       Height=""200""
-                       Width=""100""
-                       Grid.Column=""0""/>
-                <Rectangle Fill=""Red""
-                       Height=""200""
-                       Width=""100""
-                       Grid.Column=""1""/>
-                <Rectangle Fill=""Yellow""
-                       Height=""200""
-                       Width=""100""
-                       Grid.Column=""2""/>
-
-            </Grid>
-
-        </Grid>
-
-        <Grid Grid.Column=""1"" Margin=""10 0 0 0"">
-            <Grid.RowDefinitions>
-                <RowDefinition Height=""Auto""/>
-                <RowDefinition Height=""*""/>
-                <RowDefinition Height=""*""/>
-            </Grid.RowDefinitions>
-
-            <TextBlock Text=""Ukraine""
-                       Grid.Row=""0""
-                       FontSize=""20""/>
-            <Rectangle Fill=""Blue""
-                       Height=""100""
-                       Width=""300""
-                       Grid.Row=""1""/>
-            <Rectangle Fill=""Yellow""
-                       Height=""100""
-                       Width=""300""
-                       Grid.Row=""2""/>
-
-        </Grid>
-
-
-    </Grid>
-</UserControl>";
         }
     }
 }
