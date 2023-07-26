@@ -4,19 +4,56 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:DevTools.Views"
-             xmlns:formatter="clr-namespace:DevTools.Views.Formatter"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
-  <TabControl>
-    <TabItem Header="HTML">
-      <formatter:DevHtmlFormatterTabView />
-    </TabItem>
-    <TabItem Header="XML">
-      <formatter:DevXMLFormatterTabView />
-    </TabItem>
-    <TabItem Header="JSON">
-      <formatter:DevJsonFormatterTabView />
-    </TabItem>
-  </TabControl>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <StackPanel x:Name="OptionsLine"
+                Orientation="Horizontal"
+                Grid.Row="0"
+                Margin="10 0 0 0">
+      <TextBlock Text="Format Type"
+                 VerticalAlignment="Center"
+                 FontSize="30" />
+      <ComboBox ItemsSource="{Binding FormatTypes}"
+                SelectedItem="{Binding FormatType, Mode=TwoWay}"
+                Margin="10 0 0 0"
+                VerticalAlignment="Bottom" />
+    </StackPanel>
+
+    <Grid Grid.Row="1"
+          Margin="5">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <TextBox Grid.Column="0"
+               Text="{Binding TextToFormat, Mode=TwoWay}"
+               AcceptsReturn="True"
+               TextWrapping="Wrap"
+               TextChanged="__TextChanged"
+               VerticalScrollBarVisibility="Auto" />
+
+      <TextBox Grid.Column="1"
+               Text="{Binding ConvertedText}"
+               Margin="10 0 0 0"
+               AcceptsReturn="True"
+               TextWrapping="Wrap"
+               Foreground="{Binding Foreground}"
+               IsReadOnly="True"
+               VerticalScrollBarVisibility="Auto" />
+
+    </Grid>
+
+
+
+  </Grid>
+
 </UserControl>
